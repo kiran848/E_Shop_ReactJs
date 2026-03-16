@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import React,{ useEffect, useState } from "react";
 import axios from "axios";
-
+import styles from "./style.module.css";
 const Order = () => {
 
   const [orders,setOrders] = useState([]);
@@ -16,7 +16,7 @@ const Order = () => {
     try{
 
       const res = await axios.get(
-        "http://localhost:5000/api/orders",
+        "http://localhost:5000/api/order",
         {
           headers:{
             Authorization:`Bearer ${token}`
@@ -24,7 +24,7 @@ const Order = () => {
         }
       );
 
-      setOrders(res.data.data);
+      setOrders(res.data.data || []);
 
     }
     catch(err){
@@ -35,25 +35,48 @@ const Order = () => {
 
   return(
     <div className="container">
-
+      <div className={styles.wrapper}>
       <h2>My Orders</h2>
 
       {orders.length === 0 ? (
         <p>No orders found</p>
       ) : (
 
-        orders.map(order => (
-          <div key={order._id} className="card p-3 mb-3">
+        orders.map((order) => (
+          <div className="order-card mb-4 p-3 shadow-sm" key={order._id}>
 
-            <p><strong>Order ID:</strong> {order._id}</p>
-            <p><strong>Total Amount:</strong> ₹{order.totalAmount}</p>
+            <h5>Order ID: {order._id}</h5>
             <p><strong>Status:</strong> {order.status}</p>
+
+            <div className="row">
+
+              {order.items?.map((item) => (
+
+                <div className="col-md-3" key={item._id}>
+                  <div className="product-card">
+
+                    <img
+                      src={item.product?.image}
+                      alt={item.product?.name}
+                      className="img-fluid product-img"
+                    />
+
+                    <h6>{item.product?.name}</h6>
+                    <p className="price">₹{item.price}</p>
+
+                  </div>
+                </div>
+
+              ))}
+
+            </div>
 
           </div>
         ))
 
       )}
 
+    </div>
     </div>
   );
 };

@@ -1,0 +1,27 @@
+.order-card{
+background:white;
+border-radius:10px;
+}
+
+.product-card{
+text-align:center;
+padding:10px;
+transition:0.3s;
+border-radius:10px;
+}
+
+.product-card:hover{
+transform:scale(1.05);
+box-shadow:0 5px 20px rgba(0,0,0,0.15);
+}
+
+.product-img{
+height:150px;
+object-fit:contain;
+margin-bottom:10px;
+}
+
+.price{
+color:green;
+font-weight:bold;
+}

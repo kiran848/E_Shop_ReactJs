@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-
+import { Link } from "react-router-dom";
 
 const ProductDetail = () => {
     const {id}=useParams();
@@ -29,7 +29,7 @@ const ProductDetail = () => {
             <div className="wrapper">
           <img
             src={product.image}
-            alt={product.title}
+            alt={product.name}
             className="img-fluid"
           />
         </div>
@@ -37,19 +37,18 @@ const ProductDetail = () => {
 
         <div className="col-md-7">
             <div className="wrapper">
-          <h2>{product.title}</h2>
+          <h2>{product.name}</h2>
 
           <h4 className="text-success">${product.price}</h4>
 
           <p>{product.description}</p>
 
           <p>
-           <strong>Category:</strong> {product.category}
+           <strong>Category:</strong> {product.category?.name}
           </p>
-
-          <button className="btn btn-primary">
-            Add to Cart
-          </button>
+             
+             <Link to={`/orders`} class="btn btn-primary btn-block">Buy Now</Link>
+          
         </div>
         </div>
 
